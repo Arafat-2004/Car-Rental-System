@@ -13,11 +13,21 @@ class CarRental {
     vector<Car> cars;
 public:
     CarRental() { loadCars(); }
-    void loadCars() {
-        ifstream file("cars.txt");
-        Car car;
-        while (file >> car.id >> car.model >> car.brand >> car.price >> car.available)
-            cars.push_back(car);
+   void loadCars() {
+    ifstream file("cars.txt");
+    if (!file) { 
+        cout << "No existing car data found. Starting fresh.\n"; 
+        return; 
+    }
+    Car car;
+    while (file >> car.id) {
+        file.ignore();
+        getline(file, car.model, '|');
+        getline(file, car.brand, '|');
+        file >> car.price >> car.available;
+        cars.push_back(car);
+    }
+}
     }
     void saveCars() {
         ofstream file("cars.txt");
