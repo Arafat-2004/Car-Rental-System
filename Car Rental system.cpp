@@ -35,13 +35,19 @@ public:
             file << car.id << " " << car.model << " " << car.brand << " " << car.price << " " << car.available << "\n";
     }
     void addCar() {
-        Car car;
-        cout << "Enter ID, Model, Brand, Price: ";
-        cin >> car.id >> car.model >> car.brand >> car.price;
-        car.available = true;
-        cars.push_back(car);
-        saveCars();
-    }
+        cout << "Enter Car ID: ";
+        getline(cin >> ws, car.id);
+        cout << "Enter Model: ";
+        getline(cin >> ws, car.model);
+        cout << "Enter Brand: ";
+        getline(cin >> ws, car.brand);
+        cout << "Enter Price: ";
+        while (!(cin >> car.price)) {
+            cout << "Invalid price. Try again: ";
+            cin.clear();
+            cin.ignore(1000, '\n');
+        }
+        
     void displayCars() {
         for (auto &car : cars)
             if (car.available)
